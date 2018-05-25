@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Windows;
 
-namespace WpfApplication31
+namespace ContextMenuToShowTopN_Example
 {
     /// <summary>
     /// Interaction logic for App.xaml
