@@ -1,12 +1,11 @@
+﻿using ContextMenuToShowTopN_Example.nwindDataSetTableAdapters;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.PivotGrid;
-using DevExpress.Xpf.PivotGrid.Internal;
 using System.Data;
 using System.Linq;
 using System.Windows;
-using WpfApplication31.nwindDataSetTableAdapters;
 
-namespace WpfApplication31
+namespace ContextMenuToShowTopN_Example
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -32,53 +31,48 @@ namespace WpfApplication31
             pivotGridControl1.Fields["ProductAmount"].Area = FieldArea.DataArea;
             pivotGridControl1.Fields["OrderDate"].Area = FieldArea.ColumnArea;
             pivotGridControl1.Fields["OrderDate"].GroupInterval = FieldGroupInterval.DateYear;
-
-        }
-
-        private void BarButtonItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
-        {
-            PivotGridFieldValueMenuInfo menuInfo = pivotGridControl1.GridMenu.MenuInfo as PivotGridFieldValueMenuInfo;
-            this.Title = menuInfo.ValueItem.DisplayText;
-
+            pivotGridControl1.Fields["OrderDate"].DisplayFolder = "Date";
         }
 
         private void pivotGridControl1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
         {
             FieldValueElement fvElement = e.TargetElement as FieldValueElement;
-            FieldValueItem fvItem = fvElement.Item;
-            if (fvItem.IsLastLevelItem)
+            if (fvElement == null) return;
+
+            FieldValueElementData fvElementData = fvElement.ElementData as FieldValueElementData;
+            if (fvElementData.IsLastLevelItem)
             {
-                string itemCaption = string.Format( "Top 5 Values in this {0}", fvItem.IsColumn ? "Column" : "Row");
+                string itemCaption = string.Format( "Top 5 Values in this {0}", fvElementData.IsColumn ? "Column" : "Row");
                 BarButtonItem item = new BarButtonItem { Content = itemCaption };
                 item.ItemClick += item_ItemClick;
-                item.Tag = fvItem;
+                item.Tag = fvElementData;
                 e.Customizations.Add(new AddBarItemAction { Item = item });
             }
         }
 
         void item_ItemClick(object sender, ItemClickEventArgs e)
         {
-            FieldValueItem valueItem = e.Item.Tag as FieldValueItem;
-            valueItem.PivotGrid.BeginUpdate();
+            FieldValueElementData elementData = e.Item.Tag as FieldValueElementData;
+            elementData.PivotGrid.BeginUpdate();
 
-            var sortConditions = valueItem.PivotGrid.GetFieldsByArea(valueItem.IsColumn ? FieldArea.ColumnArea : FieldArea.RowArea).
-                Where(f => f.AreaIndex <= valueItem.Field.AreaIndex).Select(f => new
+            var sortConditions = elementData.PivotGrid.GetFieldsByArea(elementData.IsColumn ? FieldArea.ColumnArea : FieldArea.RowArea).
+                Where(f => f.AreaIndex <= elementData.Field.AreaIndex).Select(f => new
             {
                 Field = f,
-                Value = valueItem.PivotGrid.GetFieldValue(f, valueItem.MaxLastLevelIndex)
+                Value = elementData.PivotGrid.GetFieldValue(f, elementData.MaxIndex)
             });
 
-            valueItem.PivotGrid.GetFieldsByArea(valueItem.IsColumn ? FieldArea.RowArea : FieldArea.ColumnArea).ForEach(f =>
+            elementData.PivotGrid.GetFieldsByArea(elementData.IsColumn ? FieldArea.RowArea : FieldArea.ColumnArea).ForEach(f =>
             {
                 f.SortOrder = FieldSortOrder.Descending;
-                f.SortByField = valueItem.DataField;
+                f.SortByField = elementData.DataField;
                 f.SortByConditions.Clear();
                 f.SortByConditions.AddRange(sortConditions.Select(c => new SortByCondition(c.Field, c.Value)));
                 f.TopValueCount = 5;
                 f.TopValueShowOthers = true;
 
             });
-            valueItem.PivotGrid.EndUpdate();
+            elementData.PivotGrid.EndUpdate();
         }
     }
 }

@@ -4,7 +4,7 @@
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
       <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
-          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="nwindConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="nwindConnectionString (Settings)" PropertyReference="ApplicationSettings.WpfApplication31.Properties.Settings.GlobalReference.Default.nwindConnectionString" Provider="System.Data.OleDb" />
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="nwindConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="nwindConnectionString (Settings)" PropertyReference="ApplicationSettings.ContextMenuToShowTopN_Example.Properties.Settings.GlobalReference.Default.nwindConnectionString" Provider="System.Data.OleDb" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CustomerReportsTableAdapter" GeneratorDataComponentClassName="CustomerReportsTableAdapter" Name="CustomerReports" UserDataComponentName="CustomerReportsTableAdapter">
@@ -34,7 +34,7 @@
   <xs:element name="nwindDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="nwindDataSet" msprop:Generator_UserDSName="nwindDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="CustomerReports" msprop:Generator_TableClassName="CustomerReportsDataTable" msprop:Generator_TableVarName="tableCustomerReports" msprop:Generator_TablePropName="CustomerReports" msprop:Generator_RowDeletingName="CustomerReportsRowDeleting" msprop:Generator_UserTableName="CustomerReports" msprop:Generator_RowChangingName="CustomerReportsRowChanging" msprop:Generator_RowEvHandlerName="CustomerReportsRowChangeEventHandler" msprop:Generator_RowDeletedName="CustomerReportsRowDeleted" msprop:Generator_RowEvArgName="CustomerReportsRowChangeEvent" msprop:Generator_RowChangedName="CustomerReportsRowChanged" msprop:Generator_RowClassName="CustomerReportsRow">
+        <xs:element name="CustomerReports" msprop:Generator_TableClassName="CustomerReportsDataTable" msprop:Generator_TableVarName="tableCustomerReports" msprop:Generator_RowChangedName="CustomerReportsRowChanged" msprop:Generator_TablePropName="CustomerReports" msprop:Generator_RowDeletingName="CustomerReportsRowDeleting" msprop:Generator_RowChangingName="CustomerReportsRowChanging" msprop:Generator_RowEvHandlerName="CustomerReportsRowChangeEventHandler" msprop:Generator_RowDeletedName="CustomerReportsRowDeleted" msprop:Generator_RowClassName="CustomerReportsRow" msprop:Generator_UserTableName="CustomerReports" msprop:Generator_RowEvArgName="CustomerReportsRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="ProductName" msprop:Generator_ColumnVarNameInTable="columnProductName" msprop:Generator_ColumnPropNameInRow="ProductName" msprop:Generator_ColumnPropNameInTable="ProductNameColumn" msprop:Generator_UserColumnName="ProductName" minOccurs="0">
