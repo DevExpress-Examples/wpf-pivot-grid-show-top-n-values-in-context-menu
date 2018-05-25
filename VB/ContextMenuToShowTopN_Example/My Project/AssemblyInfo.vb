@@ -7,12 +7,12 @@ Imports System.Windows
 ' General Information about an assembly is controlled through the following 
 ' set of attributes. Change these attribute values to modify the information
 ' associated with an assembly.
-<Assembly: AssemblyTitle("WpfApplication31")>
+<Assembly: AssemblyTitle("ContextMenuToShowTopN_Example")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyConfiguration("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("WpfApplication31")>
-<Assembly: AssemblyCopyright("Copyright ©  2010")>
+<Assembly: AssemblyProduct("ContextMenuToShowTopN_Example")>
+<Assembly: AssemblyCopyright("Copyright ©  2018")>
 <Assembly: AssemblyTrademark("")>
 <Assembly: AssemblyCulture("")>
 

@@ -5,7 +5,7 @@ Imports System.Data
 Imports System.Linq
 Imports System.Windows
 
-Namespace WpfApplication31
+Namespace ContextMenuToShowTopN_Example
     ''' <summary>
     ''' Interaction logic for App.xaml
     ''' </summary>

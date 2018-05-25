@@ -1,12 +1,11 @@
-﻿Imports DevExpress.Xpf.Bars
+﻿Imports ContextMenuToShowTopN_Example.nwindDataSetTableAdapters
+Imports DevExpress.Xpf.Bars
 Imports DevExpress.Xpf.PivotGrid
-Imports DevExpress.Xpf.PivotGrid.Internal
 Imports System.Data
 Imports System.Linq
 Imports System.Windows
-Imports WpfApplication31.nwindDataSetTableAdapters
 
-Namespace WpfApplication31
+Namespace ContextMenuToShowTopN_Example
     ''' <summary>
     ''' Interaction logic for MainWindow.xaml
     ''' </summary>
@@ -30,46 +29,44 @@ Namespace WpfApplication31
             pivotGridControl1.Fields("ProductAmount").Area = FieldArea.DataArea
             pivotGridControl1.Fields("OrderDate").Area = FieldArea.ColumnArea
             pivotGridControl1.Fields("OrderDate").GroupInterval = FieldGroupInterval.DateYear
-
-        End Sub
-
-        Private Sub BarButtonItem_ItemClick(ByVal sender As Object, ByVal e As DevExpress.Xpf.Bars.ItemClickEventArgs)
-            Dim menuInfo As PivotGridFieldValueMenuInfo = TryCast(pivotGridControl1.GridMenu.MenuInfo, PivotGridFieldValueMenuInfo)
-            Me.Title = menuInfo.ValueItem.DisplayText
-
+            pivotGridControl1.Fields("OrderDate").DisplayFolder = "Date"
         End Sub
 
         Private Sub pivotGridControl1_PopupMenuShowing(ByVal sender As Object, ByVal e As PopupMenuShowingEventArgs)
             Dim fvElement As FieldValueElement = TryCast(e.TargetElement, FieldValueElement)
-            Dim fvItem As FieldValueItem = fvElement.Item
-            If fvItem.IsLastLevelItem Then
-                Dim itemCaption As String = String.Format("Top 5 Values in this {0}",If(fvItem.IsColumn, "Column", "Row"))
+            If fvElement Is Nothing Then
+                Return
+            End If
+
+            Dim fvElementData As FieldValueElementData = TryCast(fvElement.ElementData, FieldValueElementData)
+            If fvElementData.IsLastLevelItem Then
+                Dim itemCaption As String = String.Format("Top 5 Values in this {0}",If(fvElementData.IsColumn, "Column", "Row"))
                 Dim item As BarButtonItem = New BarButtonItem With {.Content = itemCaption}
                 AddHandler item.ItemClick, AddressOf item_ItemClick
-                item.Tag = fvItem
+                item.Tag = fvElementData
                 e.Customizations.Add(New AddBarItemAction With {.Item = item})
             End If
         End Sub
 
         Private Sub item_ItemClick(ByVal sender As Object, ByVal e As ItemClickEventArgs)
-            Dim valueItem As FieldValueItem = TryCast(e.Item.Tag, FieldValueItem)
-            valueItem.PivotGrid.BeginUpdate()
+            Dim elementData As FieldValueElementData = TryCast(e.Item.Tag, FieldValueElementData)
+            elementData.PivotGrid.BeginUpdate()
 
-            Dim sortConditions = valueItem.PivotGrid.GetFieldsByArea(If(valueItem.IsColumn, FieldArea.ColumnArea, FieldArea.RowArea)).Where(Function(f) f.AreaIndex <= valueItem.Field.AreaIndex).Select(Function(f) New With { _
+            Dim sortConditions = elementData.PivotGrid.GetFieldsByArea(If(elementData.IsColumn, FieldArea.ColumnArea, FieldArea.RowArea)).Where(Function(f) f.AreaIndex <= elementData.Field.AreaIndex).Select(Function(f) New With { _
                 Key .Field = f, _
-                Key .Value = valueItem.PivotGrid.GetFieldValue(f, valueItem.MaxLastLevelIndex) _
+                Key .Value = elementData.PivotGrid.GetFieldValue(f, elementData.MaxIndex) _
             })
 
-            valueItem.PivotGrid.GetFieldsByArea(If(valueItem.IsColumn, FieldArea.RowArea, FieldArea.ColumnArea)).ForEach(Sub(f)
+            elementData.PivotGrid.GetFieldsByArea(If(elementData.IsColumn, FieldArea.RowArea, FieldArea.ColumnArea)).ForEach(Sub(f)
                 f.SortOrder = FieldSortOrder.Descending
-                f.SortByField = valueItem.DataField
+                f.SortByField = elementData.DataField
                 f.SortByConditions.Clear()
                 f.SortByConditions.AddRange(sortConditions.Select(Function(c) New SortByCondition(c.Field, c.Value)))
                 f.TopValueCount = 5
                 f.TopValueShowOthers = True
 
             End Sub)
-            valueItem.PivotGrid.EndUpdate()
+            elementData.PivotGrid.EndUpdate()
         End Sub
     End Class
 End Namespace
