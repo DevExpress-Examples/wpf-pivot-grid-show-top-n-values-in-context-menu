@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data;
-using WpfApplication31.nwindDataSetTableAdapters;
+using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.PivotGrid;
 using DevExpress.Xpf.PivotGrid.Internal;
-using DevExpress.Xpf.Bars;
+using System.Data;
+using System.Linq;
+using System.Windows;
+using WpfApplication31.nwindDataSetTableAdapters;
 
 namespace WpfApplication31
 {
@@ -31,10 +20,7 @@ namespace WpfApplication31
         {
             InitializeComponent();
             tableAdapter.Fill(table);
-
             InitializePivot();
-
-
         }
 
         private void InitializePivot()
