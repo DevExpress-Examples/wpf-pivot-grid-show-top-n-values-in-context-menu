@@ -25,7 +25,6 @@ namespace WpfApplication31
 
         private void InitializePivot()
         {
-            pivotGridControl1.BeginUpdate();
             pivotGridControl1.DataSource = table;
             pivotGridControl1.RetrieveFields();
             pivotGridControl1.Fields["CompanyName"].Area = FieldArea.RowArea;
@@ -33,7 +32,6 @@ namespace WpfApplication31
             pivotGridControl1.Fields["ProductAmount"].Area = FieldArea.DataArea;
             pivotGridControl1.Fields["OrderDate"].Area = FieldArea.ColumnArea;
             pivotGridControl1.Fields["OrderDate"].GroupInterval = FieldGroupInterval.DateYear;
-            pivotGridControl1.EndUpdate();
 
         }
 
