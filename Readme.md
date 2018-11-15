@@ -1,3 +1,9 @@
+<!-- default file list -->
+*Files to look at*:
+
+* [MainWindow.xaml](./CS/WpfApplication31/MainWindow.xaml) (VB: [MainWindow.xaml](./VB/WpfApplication31/MainWindow.xaml))
+* [MainWindow.xaml.cs](./CS/WpfApplication31/MainWindow.xaml.cs) (VB: [MainWindow.xaml](./VB/WpfApplication31/MainWindow.xaml))
+<!-- default file list end -->
 # How to to show Top N Values calculated by a certain measure using the Context Menu
 
 
