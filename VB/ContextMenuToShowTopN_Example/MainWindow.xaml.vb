@@ -1,4 +1,4 @@
-﻿Imports ContextMenuToShowTopN_Example.nwindDataSetTableAdapters
+﻿Imports DevExpress.DataAccess.Excel
 Imports DevExpress.Xpf.Bars
 Imports DevExpress.Xpf.PivotGrid
 Imports DevExpress.Xpf.PivotGrid.Internal
@@ -13,26 +13,32 @@ Namespace ContextMenuToShowTopN_Example
 	''' </summary>
 
 	Partial Public Class MainWindow
-		Inherits Window
+		Inherits DevExpress.Xpf.Core.ThemedWindow
 
-		Private table As New nwindDataSet.ProductReportsDataTable()
-		Private tableAdapter As New ProductReportsTableAdapter()
+		Private xlDataSource As New ExcelDataSource()
 		Public Sub New()
 			InitializeComponent()
-			tableAdapter.Fill(table)
+			InitializeExcelDataSource()
 			InitializePivot()
 		End Sub
 
+		Private Sub InitializeExcelDataSource()
+			xlDataSource.FileName = "SalesPerson.xlsx"
+			Dim worksheetSettings As New ExcelWorksheetSettings("Data")
+			xlDataSource.SourceOptions = New ExcelSourceOptions(worksheetSettings)
+			xlDataSource.SourceOptions.SkipEmptyRows = False
+			xlDataSource.SourceOptions.UseFirstRowAsHeader = True
+			xlDataSource.Fill()
+		End Sub
+
 		Private Sub InitializePivot()
-			pivotGridControl1.DataSource = table
+			pivotGridControl1.DataSource = xlDataSource
 			pivotGridControl1.RetrieveFields()
+			pivotGridControl1.Fields("Sales Person").Area = FieldArea.RowArea
 			pivotGridControl1.Fields("CategoryName").Area = FieldArea.RowArea
-			pivotGridControl1.Fields("ProductName").Area = FieldArea.RowArea
-			pivotGridControl1.Fields("ProductSales").Area = FieldArea.DataArea
-			pivotGridControl1.Fields("ShippedDate").Area = FieldArea.ColumnArea
-			pivotGridControl1.Fields("ShippedDate").GroupInterval = FieldGroupInterval.DateMonthYear
-			pivotGridControl1.Fields("ShippedDate").DisplayFolder = "Date"
-			pivotGridControl1.BestFit()
+			pivotGridControl1.Fields("Quantity").Area = FieldArea.DataArea
+			pivotGridControl1.Fields("OrderDate").Area = FieldArea.ColumnArea
+			pivotGridControl1.Fields("OrderDate").GroupInterval = FieldGroupInterval.DateYear
 		End Sub
 
 		Private Sub pivotGridControl1_PopupMenuShowing(ByVal sender As Object, ByVal e As PopupMenuShowingEventArgs)
@@ -115,6 +121,8 @@ Namespace ContextMenuToShowTopN_Example
 			Return fields.Select(Function(f) New KeyValuePair(Of PivotGridField, Object)(f, valueItem.PivotGrid.GetFieldValue(f, valueItem.MinLastLevelIndex))).ToList()
 		End Function
 
-
+		Private Sub PivotGridControl1_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
+			pivotGridControl1.BestFit(FieldArea.ColumnArea)
+		End Sub
 	End Class
 End Namespace

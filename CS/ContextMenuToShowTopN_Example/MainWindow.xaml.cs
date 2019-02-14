@@ -1,4 +1,4 @@
-﻿using ContextMenuToShowTopN_Example.nwindDataSetTableAdapters;
+﻿using DevExpress.DataAccess.Excel;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.PivotGrid;
 using DevExpress.Xpf.PivotGrid.Internal;
@@ -13,28 +13,35 @@ namespace ContextMenuToShowTopN_Example
     /// Interaction logic for MainWindow.xaml
     /// </summary>
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : DevExpress.Xpf.Core.ThemedWindow
     {
-        nwindDataSet.ProductReportsDataTable table = new nwindDataSet.ProductReportsDataTable();
-        ProductReportsTableAdapter tableAdapter = new ProductReportsTableAdapter();
+        ExcelDataSource xlDataSource = new ExcelDataSource();
         public MainWindow()
         {
             InitializeComponent();
-            tableAdapter.Fill(table);
+            InitializeExcelDataSource();
             InitializePivot();
+        }
+
+        private void InitializeExcelDataSource()
+        {
+            xlDataSource.FileName = "SalesPerson.xlsx";
+            ExcelWorksheetSettings worksheetSettings = new ExcelWorksheetSettings("Data");
+            xlDataSource.SourceOptions = new ExcelSourceOptions(worksheetSettings);
+            xlDataSource.SourceOptions.SkipEmptyRows = false;
+            xlDataSource.SourceOptions.UseFirstRowAsHeader = true;
+            xlDataSource.Fill();
         }
 
         private void InitializePivot()
         {
-            pivotGridControl1.DataSource = table;
+            pivotGridControl1.DataSource = xlDataSource;
             pivotGridControl1.RetrieveFields();
+            pivotGridControl1.Fields["Sales Person"].Area = FieldArea.RowArea;
             pivotGridControl1.Fields["CategoryName"].Area = FieldArea.RowArea;
-            pivotGridControl1.Fields["ProductName"].Area = FieldArea.RowArea;
-            pivotGridControl1.Fields["ProductSales"].Area = FieldArea.DataArea;
-            pivotGridControl1.Fields["ShippedDate"].Area = FieldArea.ColumnArea;
-            pivotGridControl1.Fields["ShippedDate"].GroupInterval = FieldGroupInterval.DateMonthYear;
-            pivotGridControl1.Fields["ShippedDate"].DisplayFolder = "Date";
-            pivotGridControl1.BestFit();
+            pivotGridControl1.Fields["Quantity"].Area = FieldArea.DataArea;
+            pivotGridControl1.Fields["OrderDate"].Area = FieldArea.ColumnArea;
+            pivotGridControl1.Fields["OrderDate"].GroupInterval = FieldGroupInterval.DateYear;
         }
 
         private void pivotGridControl1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
@@ -123,6 +130,9 @@ namespace ContextMenuToShowTopN_Example
                 )).ToList();
         }
 
-
+        private void PivotGridControl1_Loaded(object sender, RoutedEventArgs e)
+        {
+            pivotGridControl1.BestFit(FieldArea.ColumnArea);
+        }
     }
 }

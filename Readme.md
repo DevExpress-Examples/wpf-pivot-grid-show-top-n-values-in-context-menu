@@ -3,7 +3,7 @@
 
 The key task is to enable the [Sorting by Summary](https://docs.devexpress.com/WPF/8072) and [Top N Values](https://docs.devexpress.com/WPF/8063) features simultaneously.
 
-![screenshot](https://github.com/DevExpress-Examples/how-to-to-show-top-n-values-calculated-by-a-certain-measure-using-the-context-menu-t353100/blob/18.1.3%2B/images/screenshot.png)
+![screenshot](https://github.com/DevExpress-Examples/how-to-to-show-top-n-values-calculated-by-a-certain-measure-using-the-context-menu-t353100/blob/18.2.4%2B/images/screenshot.png)
 
 API in this example:
 

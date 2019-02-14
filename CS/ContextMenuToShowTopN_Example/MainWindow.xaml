@@ -1,19 +1,14 @@
-<Window
-    x:Class="ContextMenuToShowTopN_Example.MainWindow"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid"
-    Width="750"
-    Height="400"
-    Title="MainWindow">
+<dx:ThemedWindow x:Class="ContextMenuToShowTopN_Example.MainWindow" Width="750" Height="400" Title="MainWindow" 
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:dxpg="http://schemas.devexpress.com/winfx/2008/xaml/pivotgrid">
 
     <Grid>
-        <dxpg:PivotGridControl
-            RowTreeWidth="250"            
-            Name="pivotGridControl1"
-            PopupMenuShowing="pivotGridControl1_PopupMenuShowing">
+        <dxpg:PivotGridControl RowTreeWidth="250" Name="pivotGridControl1" 
+                               PopupMenuShowing="pivotGridControl1_PopupMenuShowing" 
+                               Loaded="PivotGridControl1_Loaded">
         </dxpg:PivotGridControl>
     </Grid>
 
-</Window>
+</dx:ThemedWindow>
