@@ -7,22 +7,22 @@
           <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="nwindConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="nwindConnectionString (Settings)" PropertyReference="ApplicationSettings.ContextMenuToShowTopN_Example.Properties.Settings.GlobalReference.Default.nwindConnectionString" Provider="System.Data.OleDb" />
         </Connections>
         <Tables>
-          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CustomerReportsTableAdapter" GeneratorDataComponentClassName="CustomerReportsTableAdapter" Name="CustomerReports" UserDataComponentName="CustomerReportsTableAdapter">
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ProductReportsTableAdapter" GeneratorDataComponentClassName="ProductReportsTableAdapter" Name="ProductReports" UserDataComponentName="ProductReportsTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="nwindConnectionString (Settings)" DbObjectName="CustomerReports" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="nwindConnectionString (Settings)" DbObjectName="ProductReports" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>SELECT ProductName, CompanyName, OrderDate, ProductAmount FROM CustomerReports</CommandText>
+                    <CommandText>SELECT CategoryName, ProductName, ProductSales, ShippedDate FROM ProductReports</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
             </MainSource>
             <Mappings>
+              <Mapping SourceColumn="CategoryName" DataSetColumn="CategoryName" />
               <Mapping SourceColumn="ProductName" DataSetColumn="ProductName" />
-              <Mapping SourceColumn="CompanyName" DataSetColumn="CompanyName" />
-              <Mapping SourceColumn="OrderDate" DataSetColumn="OrderDate" />
-              <Mapping SourceColumn="ProductAmount" DataSetColumn="ProductAmount" />
+              <Mapping SourceColumn="ProductSales" DataSetColumn="ProductSales" />
+              <Mapping SourceColumn="ShippedDate" DataSetColumn="ShippedDate" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -34,9 +34,16 @@
   <xs:element name="nwindDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="nwindDataSet" msprop:Generator_UserDSName="nwindDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="CustomerReports" msprop:Generator_TableClassName="CustomerReportsDataTable" msprop:Generator_TableVarName="tableCustomerReports" msprop:Generator_RowChangedName="CustomerReportsRowChanged" msprop:Generator_TablePropName="CustomerReports" msprop:Generator_RowDeletingName="CustomerReportsRowDeleting" msprop:Generator_RowChangingName="CustomerReportsRowChanging" msprop:Generator_RowEvHandlerName="CustomerReportsRowChangeEventHandler" msprop:Generator_RowDeletedName="CustomerReportsRowDeleted" msprop:Generator_RowClassName="CustomerReportsRow" msprop:Generator_UserTableName="CustomerReports" msprop:Generator_RowEvArgName="CustomerReportsRowChangeEvent">
+        <xs:element name="ProductReports" msprop:Generator_TableClassName="ProductReportsDataTable" msprop:Generator_TableVarName="tableProductReports" msprop:Generator_TablePropName="ProductReports" msprop:Generator_RowDeletingName="ProductReportsRowDeleting" msprop:Generator_RowChangingName="ProductReportsRowChanging" msprop:Generator_RowEvHandlerName="ProductReportsRowChangeEventHandler" msprop:Generator_RowDeletedName="ProductReportsRowDeleted" msprop:Generator_UserTableName="ProductReports" msprop:Generator_RowChangedName="ProductReportsRowChanged" msprop:Generator_RowEvArgName="ProductReportsRowChangeEvent" msprop:Generator_RowClassName="ProductReportsRow">
           <xs:complexType>
             <xs:sequence>
+              <xs:element name="CategoryName" msprop:Generator_ColumnVarNameInTable="columnCategoryName" msprop:Generator_ColumnPropNameInRow="CategoryName" msprop:Generator_ColumnPropNameInTable="CategoryNameColumn" msprop:Generator_UserColumnName="CategoryName" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="ProductName" msprop:Generator_ColumnVarNameInTable="columnProductName" msprop:Generator_ColumnPropNameInRow="ProductName" msprop:Generator_ColumnPropNameInTable="ProductNameColumn" msprop:Generator_UserColumnName="ProductName" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
@@ -44,15 +51,8 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="CompanyName" msprop:Generator_ColumnVarNameInTable="columnCompanyName" msprop:Generator_ColumnPropNameInRow="CompanyName" msprop:Generator_ColumnPropNameInTable="CompanyNameColumn" msprop:Generator_UserColumnName="CompanyName" minOccurs="0">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:maxLength value="40" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="OrderDate" msprop:Generator_ColumnVarNameInTable="columnOrderDate" msprop:Generator_ColumnPropNameInRow="OrderDate" msprop:Generator_ColumnPropNameInTable="OrderDateColumn" msprop:Generator_UserColumnName="OrderDate" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="ProductAmount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnProductAmount" msprop:Generator_ColumnPropNameInRow="ProductAmount" msprop:Generator_ColumnPropNameInTable="ProductAmountColumn" msprop:Generator_UserColumnName="ProductAmount" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ProductSales" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnProductSales" msprop:Generator_ColumnPropNameInRow="ProductSales" msprop:Generator_ColumnPropNameInTable="ProductSalesColumn" msprop:Generator_UserColumnName="ProductSales" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ShippedDate" msprop:Generator_ColumnVarNameInTable="columnShippedDate" msprop:Generator_ColumnPropNameInRow="ShippedDate" msprop:Generator_ColumnPropNameInTable="ShippedDateColumn" msprop:Generator_UserColumnName="ShippedDate" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
