@@ -1,7 +1,6 @@
 ﻿using DevExpress.DataAccess.Excel;
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.PivotGrid;
-using DevExpress.Xpf.PivotGrid.Internal;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -49,7 +48,7 @@ namespace ContextMenuToShowTopN_Example
             FieldValueElement fvElement = e.TargetElement as FieldValueElement;
             if (fvElement == null) return;
 
-            FieldValueItem valueItem = fvElement.ElementData as FieldValueItem;
+            FieldValueElementData valueItem = fvElement.ElementData as FieldValueElementData;
             if (valueItem.IsLastLevelItem)
             {
                 string itemCaption = string.Format("Top 5 Values in this {0}", valueItem.IsColumn ? "Column" : "Row");
@@ -66,13 +65,13 @@ namespace ContextMenuToShowTopN_Example
         private void Item_CheckedChanged(object sender, ItemClickEventArgs e)
         {
             BarCheckItem item = sender as BarCheckItem;
-            FieldValueItem elementData = e.Item.Tag as FieldValueItem;
+            FieldValueElementData elementData = e.Item.Tag as FieldValueElementData;
             if ((bool)item.IsChecked)
                 SetTopFiveValues(elementData);
             else
                 ResetTopFiveValues(elementData.PivotGrid);
         }
-        private static void SetTopFiveValues(FieldValueItem valueItem)
+        private static void SetTopFiveValues(FieldValueElementData valueItem)
         {
             var sortConditions = GetConditions(valueItem);
             valueItem.PivotGrid.BeginUpdate();
@@ -87,7 +86,7 @@ namespace ContextMenuToShowTopN_Example
             });
             valueItem.PivotGrid.EndUpdate();
         }
-        private static bool IsTopFiveValuesApplied(FieldValueItem valueItem)
+        private static bool IsTopFiveValuesApplied(FieldValueElementData valueItem)
         {
             var fields = valueItem.PivotGrid.GetFieldsByArea(valueItem.IsColumn ? FieldArea.RowArea : FieldArea.ColumnArea);
             if (fields.Count == 0)
@@ -121,12 +120,12 @@ namespace ContextMenuToShowTopN_Example
             }
             pivotGrid.EndUpdate();
         }
-        private static List<KeyValuePair<PivotGridField, object>> GetConditions(FieldValueItem valueItem)
+        private static List<KeyValuePair<PivotGridField, object>> GetConditions(FieldValueElementData valueItem)
         {
             var fields = valueItem.PivotGrid.GetFieldsByArea(valueItem.IsColumn ? FieldArea.ColumnArea : FieldArea.RowArea).Where(f => f.AreaIndex <= valueItem.Field.AreaIndex);
             return fields.
                 Select(f => new KeyValuePair<PivotGridField, object>(f,
-                    valueItem.PivotGrid.GetFieldValue(f, valueItem.MinLastLevelIndex)
+                    valueItem.PivotGrid.GetFieldValue(f, valueItem.MinIndex)
                 )).ToList();
         }
 

@@ -1,7 +1,6 @@
 ﻿Imports DevExpress.DataAccess.Excel
 Imports DevExpress.Xpf.Bars
 Imports DevExpress.Xpf.PivotGrid
-Imports DevExpress.Xpf.PivotGrid.Internal
 Imports System.Collections.Generic
 Imports System.Data
 Imports System.Linq
@@ -47,7 +46,7 @@ Namespace ContextMenuToShowTopN_Example
 				Return
 			End If
 
-			Dim valueItem As FieldValueItem = TryCast(fvElement.ElementData, FieldValueItem)
+			Dim valueItem As FieldValueElementData = TryCast(fvElement.ElementData, FieldValueElementData)
 			If valueItem.IsLastLevelItem Then
 				Dim itemCaption As String = String.Format("Top 5 Values in this {0}",If(valueItem.IsColumn, "Column", "Row"))
 				Dim item As BarCheckItem = New BarCheckItem With {.Content = itemCaption}
@@ -63,14 +62,14 @@ Namespace ContextMenuToShowTopN_Example
 
 		Private Sub Item_CheckedChanged(ByVal sender As Object, ByVal e As ItemClickEventArgs)
 			Dim item As BarCheckItem = TryCast(sender, BarCheckItem)
-			Dim elementData As FieldValueItem = TryCast(e.Item.Tag, FieldValueItem)
+			Dim elementData As FieldValueElementData = TryCast(e.Item.Tag, FieldValueElementData)
 			If CBool(item.IsChecked) Then
 				SetTopFiveValues(elementData)
 			Else
 				ResetTopFiveValues(elementData.PivotGrid)
 			End If
 		End Sub
-		Private Shared Sub SetTopFiveValues(ByVal valueItem As FieldValueItem)
+		Private Shared Sub SetTopFiveValues(ByVal valueItem As FieldValueElementData)
 			Dim sortConditions = GetConditions(valueItem)
 			valueItem.PivotGrid.BeginUpdate()
 			ResetTopFiveValues(valueItem.PivotGrid)
@@ -84,7 +83,7 @@ Namespace ContextMenuToShowTopN_Example
 			End Sub)
 			valueItem.PivotGrid.EndUpdate()
 		End Sub
-		Private Shared Function IsTopFiveValuesApplied(ByVal valueItem As FieldValueItem) As Boolean
+		Private Shared Function IsTopFiveValuesApplied(ByVal valueItem As FieldValueElementData) As Boolean
 			Dim fields = valueItem.PivotGrid.GetFieldsByArea(If(valueItem.IsColumn, FieldArea.RowArea, FieldArea.ColumnArea))
 			If fields.Count = 0 Then
 				Return False
@@ -116,9 +115,9 @@ Namespace ContextMenuToShowTopN_Example
 			Next f
 			pivotGrid.EndUpdate()
 		End Sub
-		Private Shared Function GetConditions(ByVal valueItem As FieldValueItem) As List(Of KeyValuePair(Of PivotGridField, Object))
+		Private Shared Function GetConditions(ByVal valueItem As FieldValueElementData) As List(Of KeyValuePair(Of PivotGridField, Object))
 			Dim fields = valueItem.PivotGrid.GetFieldsByArea(If(valueItem.IsColumn, FieldArea.ColumnArea, FieldArea.RowArea)).Where(Function(f) f.AreaIndex <= valueItem.Field.AreaIndex)
-			Return fields.Select(Function(f) New KeyValuePair(Of PivotGridField, Object)(f, valueItem.PivotGrid.GetFieldValue(f, valueItem.MinLastLevelIndex))).ToList()
+			Return fields.Select(Function(f) New KeyValuePair(Of PivotGridField, Object)(f, valueItem.PivotGrid.GetFieldValue(f, valueItem.MinIndex))).ToList()
 		End Function
 
 		Private Sub PivotGridControl1_Loaded(ByVal sender As Object, ByVal e As RoutedEventArgs)
