@@ -1,4 +1,4 @@
-﻿<dx:ThemedWindow x:Class="ContextMenuToShowTopN_Example.MainWindow" Width="750" Height="400" Title="MainWindow" 
+<dx:ThemedWindow x:Class="ContextMenuToShowTopN_Example.MainWindow" Width="750" Height="400" Title="MainWindow" 
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
