@@ -7,7 +7,7 @@
     <Grid>
         <dxpg:PivotGridControl RowTreeWidth="250" Name="pivotGridControl1" 
                                PopupMenuShowing="pivotGridControl1_PopupMenuShowing" 
-                               Loaded="PivotGridControl1_Loaded">
+                               Loaded="PivotGridControl1_Loaded" DataProcessingEngine="Optimized">
         </dxpg:PivotGridControl>
     </Grid>
 

@@ -40,7 +40,7 @@ namespace ContextMenuToShowTopN_Example
             pivotGridControl1.Fields["CategoryName"].Area = FieldArea.RowArea;
             pivotGridControl1.Fields["Quantity"].Area = FieldArea.DataArea;
             pivotGridControl1.Fields["OrderDate"].Area = FieldArea.ColumnArea;
-            pivotGridControl1.Fields["OrderDate"].GroupInterval = FieldGroupInterval.DateYear;
+            (pivotGridControl1.Fields["OrderDate"].DataBinding as DataSourceColumnBinding).GroupInterval = FieldGroupInterval.DateYear;
         }
 
         private void pivotGridControl1_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)

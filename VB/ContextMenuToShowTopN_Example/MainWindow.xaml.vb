@@ -37,7 +37,7 @@ Namespace ContextMenuToShowTopN_Example
 			pivotGridControl1.Fields("CategoryName").Area = FieldArea.RowArea
 			pivotGridControl1.Fields("Quantity").Area = FieldArea.DataArea
 			pivotGridControl1.Fields("OrderDate").Area = FieldArea.ColumnArea
-			pivotGridControl1.Fields("OrderDate").GroupInterval = FieldGroupInterval.DateYear
+			DirectCast(pivotGridControl1.Fields("OrderDate").DataBinding, DataSourceColumnBinding).GroupInterval = FieldGroupInterval.DateYear
 		End Sub
 
 		Private Sub pivotGridControl1_PopupMenuShowing(ByVal sender As Object, ByVal e As PopupMenuShowingEventArgs)
