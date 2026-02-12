@@ -25,7 +25,7 @@ API in this example:
 * [PivotGridField.TopValueCount](https://docs.devexpress.com/WPF/DevExpress.Xpf.PivotGrid.PivotGridField.TopValueCount) property 
 * [PivotGridField.TopValueShowOthers](https://docs.devexpress.com/WPF/DevExpress.Xpf.PivotGrid.PivotGridField.TopValueShowOthers) property 
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-pivot-grid-show-top-n-values-in-context-menu&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=wpf-pivot-grid-show-top-n-values-in-context-menu&~~~was_helpful=no)
 
